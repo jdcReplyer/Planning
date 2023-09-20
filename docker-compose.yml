@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Plann1ng!!
+      MSSQL_DB: planning
+      MSSQL_USER: planning
+      MSSQL_PASSWORD: Plann1ng!!
+    ports:
+      - "1433:1433"
+    
+
+  myapp:
+    build:
+      context: . # Percorso della cartella con il tuo Dockerfile dell'applicazione .NET
+      dockerfile: Dockerfile       # Nome del tuo Dockerfile dell'applicazione .NET
+    environment:
+      ASPNETCORE_URLS: http://+:5057
+      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: "false"
+      ASPNETCORE_ENVIRONMENT: Local
+    ports:
+      - "5057:5057"  # Assicurati che la porta corrisponda a quella configurata nell'applicazione
+    depends_on:
+      - sql-server
+    
+

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>DSRA_Pack_$(AssemblyName)</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>DSRA_Pack_$(AssemblyName)</Authors>
+    <Product>DSRA_Pack_$(AssemblyName)</Product>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+</Project>

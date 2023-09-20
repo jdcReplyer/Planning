@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="22.4.0" />
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="EPPlus" Version="5.8.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Middlewares\Common.Middlewares.csproj" />
+
+    <ProjectReference Include="..\Planning.Common\Planning.Common.csproj" />
+    <ProjectReference Include="..\Planning.DataAccess\Planning.DataAccess.csproj" />
+    <ProjectReference Include="..\Common.Constants\Common.Constants.csproj" />
+    <ProjectReference Include="..\Common.DTO\Common.DTO.csproj" />
+    <ProjectReference Include="..\Common.Messaging\Common.Messaging.csproj" />
+    <ProjectReference Include="..\Common.Services\Common.Services.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="ValueObjects\" />
+  </ItemGroup>
+</Project>
