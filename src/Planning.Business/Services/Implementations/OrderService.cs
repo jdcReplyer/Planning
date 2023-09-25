@@ -23,7 +23,7 @@ namespace Planning.Business.Services.Implementations
 
         public async Task<IEnumerable<OrderDTO>> GetOrders()
         {
-            return MockDTO.GetOrdersDto();
+            return MockDTO.GetOrderDtos();
         }
 
     }

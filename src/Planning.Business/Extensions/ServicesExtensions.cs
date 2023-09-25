@@ -42,6 +42,10 @@ namespace Planning.Business.Extensions
 
             services.AddTransient<ITripService, TripService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IMasterdataService, MasterdataService>();
+            services.AddTransient<IGroupService, GroupsService>();
+
+
             // Repositories
 
             services.AddScoped<ITripRepository, TripRepository>()

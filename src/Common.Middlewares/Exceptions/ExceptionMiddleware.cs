@@ -31,6 +31,11 @@ namespace Common.Middlewares.Exceptions
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
+            if (exception is SubmitGroupException)
+            {
+                context.Response.StatusCode = 401;
+            }
+
             await context.Response.WriteAsync(new ErrorDetail()
             {
                 StatusCode = context.Response.StatusCode,

@@ -17,6 +17,7 @@ namespace Planning.DataAccess.Repositories.Implementations
         public TripRepository(PlanningDbContext planningDbContext,
             ILogger<TripRepository> logger)
         {
+            Console.WriteLine("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
             _planningDbContext = planningDbContext ?? throw new ArgumentNullException(nameof(PlanningDbContext));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -27,10 +28,7 @@ namespace Planning.DataAccess.Repositories.Implementations
             throw new NotImplementedException();
         }
 
-        public Task Update(Guid id, AlgorithmCallStatusEnum status, string? log)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public async Task<IEnumerable<Trip>> GetAll()
         {
