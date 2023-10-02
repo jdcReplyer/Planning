@@ -31,6 +31,17 @@ namespace Common.Middlewares.Exceptions
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
+            context.Response.StatusCode = exception switch
+            {
+                SubmitGroupException _ => 401,
+                OrderNotFoundException _ => 404,
+                UnauthorizedUpdateOrderException => 401,
+                GroupNotFoundException _ => 404,
+                _ => 500
+            };
+            {
+                
+            }
             if (exception is SubmitGroupException)
             {
                 context.Response.StatusCode = 401;

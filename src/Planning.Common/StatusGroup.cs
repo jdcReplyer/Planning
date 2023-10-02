@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace Planning.Common
 {
-    public enum StatusGroup
+    public enum StatusGroup{
+    
+        TO_BE_PLANNED, IN_CHARGE_OF, CONFIRMED_BY
+    }
+
+    public enum ActionGroup
     {
-        NONE, CONFIRMED_BY, SUBMITTED_BY
+        TAKE_CHARGE, SUBMIT
     }
 }

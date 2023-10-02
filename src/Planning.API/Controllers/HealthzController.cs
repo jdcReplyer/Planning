@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Planning.DataAccess.DTO;
 
 namespace Planning.API.Controllers
 {
@@ -10,6 +11,7 @@ namespace Planning.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            MockDTO.LogGroups.ForEach(g => Console.WriteLine(g));
             return Ok("alive");
         }
     }

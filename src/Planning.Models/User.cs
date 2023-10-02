@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Planning.DataAccess.DTO.Output
+namespace Planning.Models
 {
-    public class DepositDTO
+    public class User
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public AddressDTO Address { get; set; }
-
-
+        public string Surname { get; set; }
     }
 }

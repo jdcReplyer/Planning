@@ -13,11 +13,13 @@ namespace Planning.DataAccess.DTO.Output
         public string Name { get; set; }
         public string WorkProgress { get; set; }
         public ChargedUser? ChargedUser { get; set; }
-
         public BusinessFlowType BusinessFlowType { get; set; }
         public Department Department { get; set; }
 
         public Status Status { get; set; }
+
+        public string OriginZip { get; set; }
+        public string DestinationZip { get; set; }
 
         
        

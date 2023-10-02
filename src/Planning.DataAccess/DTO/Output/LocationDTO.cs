@@ -14,6 +14,8 @@ namespace Planning.DataAccess.DTO.Output
         public string? Hall { get; set; }
         public string Plant { get; set; }
 
+        public string Zip { get; set; }
+
         
     }
 

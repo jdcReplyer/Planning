@@ -5,98 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using Planning.Common;
 using Planning.DataAccess.DTO.Output;
+using Planning.Models;
 
 namespace Planning.DataAccess.DTO
 {
     public static class MockDTO
     {
         public static List<GroupDTO> Groups = GeneratesGroupDtos();
+        public static List<LogGroup> LogGroups = new List<LogGroup>();
+        public static List<OrderDTO> Orders = GetOrderDtos();
+        public static List<OrderDTO> OriginalOrders = GetOrderDtos();
+        public static List<TripDTO> Trips = new List<TripDTO>();
+
+
+
+
 
         public static List<OrderDTO> GetOrderDtos()
         {
-            var origin = new LocationDTO
-            {
-                CountryISO = "IT",
-                LocationName = "Dayco Europe",
-                Address = "1006 San Bernardo",
-                Hall = "123",
-                Plant = "abc"
-            };
-
-            var destination = new LocationDTO
-            {
-                CountryISO = "DE",
-                LocationName = "MAN",
-                Address = "38239 Salzgitter",
-                Hall = null,
-                Plant = "abc"
-            };
-            
-            var planning = new List<PlanningDTO>()
-            {
-                new PlanningDTO{
-                    Type = "Leg",
-                    DepositName = null,
-                    TripId = null,
-                    CountryISO = "IT",
-                    InStandBy = false,
-                    ForwardedToNetwork = false
-                }
-            };
-
-            var shippingUnitDetails = new List<ShippingUnitDTO>()
-            {
-                new ShippingUnitDTO
-                {
-                    Quantity = 6,
-                    PackageValue = "111444",
-                    Stackability = 2,
-                    Width = 10,
-                    Lenght = 10,
-                    Height = 10
-                },
-                new ShippingUnitDTO
-                {
-                    Quantity = 4,
-                    PackageValue = "VWPAL",
-                    Stackability = 2,
-                    Width = 10,
-                    Lenght = 10,
-                    Height = 10
-                },
-                new ShippingUnitDTO
-                {
-                    Quantity = 1,
-                    PackageValue = "000PAL",
-                    Stackability = 2,
-                    Width = 10,
-                    Lenght = 10,
-                    Height = 10
-                }
-
-            };
+            var order1 = OrderDTO.Mock();
+            order1.Id = 1;
+            order1.Group = (Groups.First());
+            var order2 = OrderDTO.Mock();
+            order2.Id = 2;
+            order2.Group = (Groups.First());
+            var order3 = OrderDTO.Mock();
+            order3.Id = 3;
+            order3.Group = (Groups.Last());
+            var order4 = OrderDTO.Mock();
+            order4.Id = 4;
+            order4.Group = (Groups.Last());
 
 
-            var order = new OrderDTO
-            {
-                Id = 1,
-                Number = 1,
-                PartnerToDeliver = null,
-                LinearMeters = 10,
-                LinearMetersType = "M",
-                PickupDateTime = new DateTime(2023, 06, 29, 10, 44, 20),
-                DeliveryDateTime = new DateTime(2023, 06, 29, 10, 44, 20),
-                ShippingUnit = 10,
-                TaxWeight = 1000,
-                Volume = 40,
-                Weight = 1000,
-                Planning = planning,
-                ShippingUnitDetails = shippingUnitDetails,
-                Origin = origin,
-                Destination = origin
-            };
 
-            return new List<OrderDTO>(){order};
+            return new List<OrderDTO>(){order1, order2, order3, order4};
 
         }
 
@@ -180,10 +122,12 @@ namespace Planning.DataAccess.DTO
                 },
                 Status = new Status
                 {
-                    Id = StatusGroup.CONFIRMED_BY,
-                    Name = "Confirmed By"
+                    Id = StatusGroup.TO_BE_PLANNED,
+                    Name = "None"
                 },
-                WorkProgress = "100m\u00b3/1000m\u00b3"
+                WorkProgress = "100m\u00b3/1000m\u00b3",
+                OriginZip = "1006",
+                DestinationZip = "38239",
             };
 
             var group2 = new GroupDTO
@@ -203,10 +147,12 @@ namespace Planning.DataAccess.DTO
                 },
                 Status = new Status
                 {
-                    Id = StatusGroup.CONFIRMED_BY,
-                    Name = "Confirmed By"
+                    Id = StatusGroup.TO_BE_PLANNED,
+                    Name = "None"
                 },
-                WorkProgress = "100m\u00b3/1000m\u00b3"
+                WorkProgress = "100m\u00b3/1000m\u00b3",
+                OriginZip = "1006",
+                DestinationZip = "38239",
             };
 
             return new List<GroupDTO>() { group1, group2 };

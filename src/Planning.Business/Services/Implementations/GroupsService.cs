@@ -9,6 +9,7 @@ using Planning.Business.Services.Interfaces;
 using Planning.Common;
 using Planning.DataAccess.DTO;
 using Planning.DataAccess.DTO.Output;
+using Planning.Models;
 
 namespace Planning.Business.Services.Implementations
 {
@@ -23,7 +24,7 @@ namespace Planning.Business.Services.Implementations
 
         public async Task<IEnumerable<GroupDTO>> GetGroups(string? bft, string? department)
         {
-            return MockDTO.Groups.FindAll(g => g.BusinessFlowType.Code == bft && g.Department.Code == department && g.ChargedUser == null);
+            return MockDTO.Groups.FindAll(g => g.BusinessFlowType.Code == bft && g.Department.Code == department && g.ChargedUser?.Id != 1);
         }
 
         public async Task<IEnumerable<GroupDTO>> GetMyGroups()
@@ -36,11 +37,19 @@ namespace Planning.Business.Services.Implementations
         public async Task<IEnumerable<GroupPostOutcomeDTO>> PostTakeChargeGroups(List<int> ids)
         {
             var groups = MockDTO.Groups.FindAll(g => ids.Contains(g.Id));
+
+            foreach (var id in ids)
+            {
+                if (!groups.Any(g => g.Id == id))
+                {
+                    throw new GroupNotFoundException(id);
+                }
+            }
             var postGroups = new List<GroupPostOutcomeDTO>();
             foreach (var g in groups)
             {
                 var success = false;
-                if (g.ChargedUser == null && g.Status.Id != StatusGroup.SUBMITTED_BY)
+                if (g.Status.Id == StatusGroup.TO_BE_PLANNED)
                 {
                     g.ChargedUser = new ChargedUser
                     {
@@ -50,6 +59,17 @@ namespace Planning.Business.Services.Implementations
                         Datetime = DateTime.Now
                     };
                     success = true;
+
+                    MockDTO.LogGroups.Add(new LogGroup
+                    {
+                        Id = MockDTO.LogGroups.Count,
+                        Action = ActionGroup.TAKE_CHARGE,
+                        Datetime = DateTime.Now,
+                        User = 1,
+                        Group = g.Id
+                    });
+                    g.Status.Id = StatusGroup.IN_CHARGE_OF;
+                    g.Status.Name = "In charge of";
                 }
 
                 postGroups.Add(new GroupPostOutcomeDTO { Success = success, Group = g });
@@ -61,8 +81,17 @@ namespace Planning.Business.Services.Implementations
         public async Task<int> SubmitGroups(List<int> ids)
         {
             var groups = MockDTO.Groups.FindAll(g => ids.Contains(g.Id));
-            foreach (var g in groups)
+            
+            foreach (var id in ids)
             {
+                if (!groups.Any(g => g.Id == id))
+                {
+                    throw new GroupNotFoundException(id);
+                }
+            }
+
+            foreach (var g in groups)
+            {   
                 if (g.ChargedUser == null || g.ChargedUser.Id != 1)
                 {
                     throw new SubmitGroupException(g.Name);
@@ -71,14 +100,21 @@ namespace Planning.Business.Services.Implementations
 
             foreach (var g in groups)
             {
+                
                 g.Status = new Status
                 {
-                    Id = StatusGroup.SUBMITTED_BY,
-                    Name = "Submitted"
+                    Id = StatusGroup.CONFIRMED_BY,
+                    Name = "Confirmed by"
                 };
-                g.ChargedUser = null;
 
-
+                MockDTO.LogGroups.Add(new LogGroup
+                {
+                    Id = MockDTO.LogGroups.Count,
+                    Action = ActionGroup.SUBMIT,
+                    Datetime = DateTime.Now,
+                    User = 1,
+                    Group = g.Id
+                });
             }
 
             return 0;

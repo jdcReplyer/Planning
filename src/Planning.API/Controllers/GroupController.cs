@@ -25,7 +25,7 @@ namespace Planning.API.Controllers
         }
 
         [HttpGet("GetGroups")]
-        public async Task<ActionResult> GetGroups([FromQuery] GetOrdersModelValidation parameters)
+        public async Task<ActionResult> GetGroups([FromQuery] GetGroupsModelValidation parameters)
         {
             if (!ModelState.IsValid)
             {
